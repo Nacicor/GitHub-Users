@@ -27,7 +27,7 @@ import com.example.github_users.ui.viewModel.UserViewModel
 @Composable
 fun UserListScreen(userViewModel: UserViewModel, userDetailViewModel: UserDetailViewModel) {
     val users = userViewModel.users.collectAsLazyPagingItems()
-    val userDetail = userDetailViewModel.userDetail.collectAsState()
+    val userDetailState = userDetailViewModel.userDetail.collectAsState()
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -88,9 +88,9 @@ fun UserListScreen(userViewModel: UserViewModel, userDetailViewModel: UserDetail
             }
         }
     }
-    userDetail.value?.let {
+    userDetailState.value?.let {
         UserDetailDialog(
-            userDetail = it,
+            userDetailState = it,
             showDialog = showDialog,
             onDismiss = {
                 showDialog = false
