@@ -1,6 +1,9 @@
 package com.example.github_users.ui.componets
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +17,6 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -44,15 +46,15 @@ import coil.request.ImageRequest
 import com.example.github_users.R
 import com.example.github_users.domain.model.UserDetail
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserDetailDialog(
     userDetail: UserDetail,
     showDialog: Boolean,
     onDismiss: () -> Unit
 ) {
+    val context = LocalContext.current
     if (showDialog) {
-        var nameText by remember {
+        var nameText by remember(userDetail.login) {
             mutableStateOf(userDetail.name ?: "N/A")
         }
         Dialog(onDismissRequest = onDismiss) {
@@ -74,7 +76,10 @@ fun UserDetailDialog(
                         onValueChange = {
                             nameText = it
                         },
-                        textStyle = TextStyle(textAlign = TextAlign.Center , color = LocalContentColor.current),
+                        textStyle = TextStyle(
+                            textAlign = TextAlign.Center,
+                            color = LocalContentColor.current
+                        ),
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
@@ -139,7 +144,11 @@ fun UserDetailDialog(
                             modifier = Modifier.align(Alignment.CenterVertically)
                         )
                         Spacer(modifier = Modifier.padding(4.dp))
-                        Text(text = userDetail.blog ?: "N/A")
+                        Text(text = userDetail.blog ?: "N/A", modifier = Modifier.clickable {
+                            val mapUrl = userDetail.blog
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapUrl))
+                            context.startActivity(intent)
+                        }, color = Color.Blue)
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -152,6 +161,7 @@ fun UserDetailDialog(
         }
     }
 }
+
 
 @Preview
 @Composable
