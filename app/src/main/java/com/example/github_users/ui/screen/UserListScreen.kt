@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
@@ -25,7 +26,10 @@ import com.example.github_users.ui.viewModel.UserDetailViewModel
 import com.example.github_users.ui.viewModel.UserViewModel
 
 @Composable
-fun UserListScreen(userViewModel: UserViewModel, userDetailViewModel: UserDetailViewModel) {
+fun UserListScreen(
+    userViewModel: UserViewModel = hiltViewModel(),
+    userDetailViewModel: UserDetailViewModel = hiltViewModel()
+) {
     val users = userViewModel.users.collectAsLazyPagingItems()
     val userDetailState = userDetailViewModel.userDetail.collectAsState()
     var showDialog by remember {

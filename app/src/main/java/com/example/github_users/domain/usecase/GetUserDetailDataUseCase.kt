@@ -4,8 +4,9 @@ import com.example.github_users.data.UserRepository
 import com.example.github_users.domain.model.UserDetail
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class GetUserDetailDataUseCase(private val repository: UserRepository) {
+class GetUserDetailDataUseCase @Inject constructor(private val repository: UserRepository) {
     suspend fun execute(userLogin: String): Result<UserDetail> {
         return try {
             val detail = repository.getUserDetail(userLogin)

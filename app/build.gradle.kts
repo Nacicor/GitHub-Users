@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -50,6 +52,11 @@ android {
 
 dependencies {
 
+    // Hilt
+    implementation(libs.hilt.android.core)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+
     implementation(libs.coil.compose)
     implementation(libs.coil.kt.coil.gif)
 
@@ -59,8 +66,8 @@ dependencies {
     implementation(libs.retrofit2)
     implementation(libs.retrofit2.converter.gson)
 
-    implementation(libs.koin.android)
-    implementation(libs.insert.koin.koin.androidx.compose)
+//    implementation(libs.koin.android)
+//    implementation(libs.insert.koin.koin.androidx.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

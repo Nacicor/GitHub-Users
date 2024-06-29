@@ -4,11 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.github_users.domain.usecase.GetUserDetailDataUseCase
 import com.example.github_users.utils.UserDetailState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserDetailViewModel(private val getUserDetailDataUseCase: GetUserDetailDataUseCase) :
+@HiltViewModel
+class UserDetailViewModel @Inject constructor(private val getUserDetailDataUseCase: GetUserDetailDataUseCase) :
     ViewModel() {
     private val _userDetail = MutableStateFlow<UserDetailState>(UserDetailState.Loading)
     val userDetail = _userDetail.asStateFlow()
